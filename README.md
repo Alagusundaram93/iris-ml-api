@@ -1,66 +1,50 @@
-# Iris Flower Classification ML API
+# Iris ML API
 
 ## 1. Project Overview
 
-This project is a Machine Learning REST API that predicts the species of an Iris flower based on its measurements.
+Iris ML API is a simple Machine Learning REST API that predicts the species of an iris flower based on its physical measurements. The project uses the Iris dataset and a classification model from scikit-learn. The main goal of this project is to learn how to train a Machine Learning model and serve that model through a clean FastAPI service.
 
-The API will receive flower measurements as input and use a trained Machine Learning model to predict the Iris flower species.
+## 2. Problem Statement
 
-The main purpose of this project is to learn how to build and serve a Machine Learning model through a REST API.
+The problem is to classify an iris flower into one of three species based on four measurements:
 
----
+* Sepal length
+* Sepal width
+* Petal length
+* Petal width
 
-## 2. Dataset
-
-We will use the Iris dataset provided by scikit-learn.
-
-The dataset contains four measurements for each flower:
-
-* Sepal Length
-* Sepal Width
-* Petal Length
-* Petal Width
-
-The flower can belong to one of three species:
+The three possible classes are:
 
 * Setosa
 * Versicolor
 * Virginica
 
----
+## 3. Dataset
 
-## 3. Machine Learning Problem
+This project uses the built-in Iris dataset provided by scikit-learn.
 
-The Machine Learning problem is **Classification**.
+The dataset contains 150 samples with four input features:
 
-The model will take the four flower measurements as input and predict which Iris species the flower belongs to.
+* Sepal length
+* Sepal width
+* Petal length
+* Petal width
 
-Example:
+The target variable is the iris flower species.
 
-```text
-Flower Measurements
-        ↓
-   ML Model
-        ↓
-     Setosa
-```
+## 4. Machine Learning Problem
 
----
+This is a supervised Machine Learning classification problem.
 
-## 4. API Contract
+The model will learn the relationship between the four flower measurements and the corresponding iris species.
 
-The `/predict` endpoint will accept four numerical values: sepal length, sepal width, petal length, and petal width. The API will validate these values and send them to the trained Machine Learning model. The model will predict the Iris flower species, and the API will return the prediction as a JSON response.
+For the initial version of this project, a simple classification model such as Logistic Regression will be used.
 
-### Input
+## 5. API Contract
 
-The API will receive:
+The API will provide a `POST /predict` endpoint.
 
-* sepal_length
-* sepal_width
-* petal_length
-* petal_width
-
-Example:
+The endpoint accepts four numerical flower measurements:
 
 ```json
 {
@@ -71,11 +55,11 @@ Example:
 }
 ```
 
-### Output
+The API validates the input and sends the valid measurements to the trained Machine Learning model.
 
-The API will return the predicted flower species.
+The model predicts the iris species and the API returns the prediction as JSON.
 
-Example:
+Example response:
 
 ```json
 {
@@ -83,122 +67,71 @@ Example:
 }
 ```
 
----
-
-## 5. API Flow
-
-The request will flow through the following steps:
+## 6. Request → Validation → Model → Response Flow
 
 ```text
 Client
    ↓
 POST /predict
    ↓
-Input Validation
+Validate input
    ↓
-Machine Learning Model
+Send validated features to ML model
    ↓
-Prediction
+Model predicts iris species
    ↓
-JSON Response
+Return prediction as JSON response
 ```
-
-### Explanation
-
-1. The client sends flower measurements to `/predict`.
-2. The API validates the input.
-3. The validated input is sent to the Machine Learning model.
-4. The model predicts the Iris species.
-5. The API returns the prediction as JSON.
-
----
-
-## 6. Model vs Service
-
-### Model
-
-The Machine Learning model is responsible for making the prediction.
-
-```text
-Input
-  ↓
-ML Model
-  ↓
-Prediction
-```
-
-### Service
-
-The API service receives requests from clients, validates the input, sends the data to the Machine Learning model, and returns the prediction.
-
-```text
-Client
-  ↓
-FastAPI Service
-  ↓
-Validation
-  ↓
-ML Model
-  ↓
-Response
-```
-
----
 
 ## 7. MVP Scope
 
-The first version of this project will contain only the basic functionality required to serve an Iris classification model through an API.
+The first version of the project will keep the scope small.
 
-### Included
+The MVP will include:
 
 * Iris dataset
-* Machine Learning classification model
+* One Machine Learning classification model
 * Model training
-* Model evaluation
-* Saved Machine Learning model
+* Saving the trained model
 * FastAPI application
 * `/predict` endpoint
 * Input validation
-* JSON prediction response
+* Prediction response
+* Basic tests
 
-### Not Included
+The project will not include authentication, databases, frontend applications, or complex Machine Learning techniques in the initial version.
 
-* Login
-* Signup
-* Database
-* Frontend
-* Admin dashboard
-* Multiple models
-* Multiple datasets
+## 8. Planned Technology Stack
 
-The goal is to keep the project simple and focus on Machine Learning API engineering.
+* Python
+* FastAPI
+* Uvicorn
+* Pydantic
+* scikit-learn
+* pandas
+* pytest
+* Git and GitHub
 
----
+## 9. Project Goal
 
-## 8. Project Plan
+The main goal is to understand how a Machine Learning model becomes a usable API service.
 
-### Task 1
+The project will demonstrate the complete flow:
 
-Plan the project and API architecture.
-
-### Task 2
-
-Create the Python environment and project folder structure.
-
-### Task 3
-
-Train and save the Machine Learning model.
-
-### Task 4
-
-Create the FastAPI application and test the API.
-
-### Future
-
-Connect the saved Machine Learning model to the `/predict` endpoint.
-
----
-
-## 9. Final Goal
-
-The final application will allow a client to send Iris flower measurements to the `/predict` API and receive the predicted Iris flower species as a JSON response.
+```text
+Dataset
+   ↓
+Train Model
+   ↓
+Save Model
+   ↓
+Load Model
+   ↓
+FastAPI
+   ↓
+Validate Request
+   ↓
+Predict
+   ↓
+Return Response
+```
